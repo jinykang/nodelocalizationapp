@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    언어변경:
+    <a href="/changelang?lang=ko">KO</a>
+    <a href="/changelang?lang=en">EN</a>
+
+    <br><br>
+    현재 선택된 언어환경: <%=langCode%><br>
+    <p>적용값: <%-t("greeting")%></p><br><br>
+ 
+
+
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      //소켓연결
+      var chat = io.connect();
+      console.log("채팅서버 연결이 완료되었습니다.");
+
+
+      $(document).ready(function(){
+        var sendMsg = "테스트 메시지입니다.";
+        chat.emit("sendmsg", sendMsg);
+        console.log("발신 메시지",sendMsg);
+      });
+
+
+      chat.on("receivemsg", function (msg) {
+        //alert(msg);
+        console.log("수신 메시지",msg);
+      });
+
+
+    </script>
+  </body>
+</html>
